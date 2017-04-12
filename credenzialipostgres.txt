@@ -1,0 +1,81 @@
+PROCEDURA DI AVVIO MAPPA-------------------------------------------------------
+1) avviare il db postgre scrivendo nella bash il seguente comando:
+sudo service postgresql start
+2)avviare il web server Apache cliccando sul bottone Run Project situato accanto al bottone Preview (Qualora al suo posto fosse presente il tasto Stop significa che il web server è già attivo)
+3) andare con il browser sul seguente link: 
+https://prova-m1nus.c9users.io/MVC_GIS
+--------------------------------------------------------------------------------
+
+PROCEDURA DI ACCESSO AL DATABASE POSTGRESQL------------------------------------
+1) avviare il db postgre scrivendo nella bash il seguente comando:
+sudo service postgresql start
+2)avviare il web server Apache cliccando sul bottone Run Project situato accanto al bottone Preview (Qualora al suo posto fosse presente il tasto Stop significa che il web server è già attivo)
+3) andare con il browser sul seguente link:
+https://prova-m1nus.c9users.io/phppgadmin
+
+Le credenziali di accesso al database sono le seguenti: 
+  username ubuntu
+  pw ubuntu
+--------------------------------------------------------------------------------
+
+prima avviare il db postgre scrivendo nella bash sudo service postgresql start
+
+INSERT INTO schema_db_alternanza.Provincie (nomeprovincia,codistatprovincia) VALUES('Massa-Carrara','045');
+="INSERT INTO schema_db_alternanza.Provincie (nomeprovincia,codistatprovincia) VALUES('"&K58&"','"&I58&"');"
+tabelle tutte scritte minuscole
+
+1) tutto minuscolo 
+2) doppio '' per '
+3) riguardare pk
+default -> 'prova'
+rimettere a idcomune not null  -> idcomune(anagrafiche) ---> codistatprovincia(comuni)
+
+
+http://{s}.tile.osm.org/{z}/{x}/{y}.png
+
+GEOJSON -> http://geojson.io/#map=2/20.0/0.0
+
+POSTGIS + LEAFLET -> https://northlandia.wordpress.com/2015/04/20/connecting-postgis-to-leaflet-using-php/
+
+
+var crs = L.CRS.proj4js('EPSG:25832', '+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs', new L.Transformation(0.5 / (Math.PI * L.Projection.Mercator.R_MAJOR), 0.5, -0.5 / (Math.PI * L.Projection.Mercator.R_MINOR), 0.5));
+
+  var map = new L.Map('Krak-Map', { center: new L.LatLng(latitude, longitude), zoom: 17, crs: crs });
+  
+  44.026223,11.1711237,12z
+  
+  INSERIMENTO SHAPE IN POSTGRESQL
+  Per inserire uno shape su postgre inserire una colonna di tipo Geom e usare la seguente sintassi
+            |
+            |
+            V
+  sintassi di un poligono su Postgre (sezione 8.8.6 , Polygons) ->
+  ( ( x1 , y1 ) , ... , ( xn , yn ) )
+  ( x1 , y1 ) , ... , ( xn , yn )
+  ( x1 , y1   , ... ,   xn , yn )
+    x1 , y1   , ... ,   xn , yn 
+    
+   FONTE -> https://www.postgresql.org/docs/9.4/static/datatype-geometric.html 
+   
+   Per metterli formattati correttamente nel GEOJSON utilizziamo la funzione postgis ST_AsGeoJSON
+   ---> http://postgis.org/docs/ST_AsGeoJSON.html
+   
+   
+   COME FARE A METTERE GLI SHAPE NEL POSTGRESQL
+   1) inserire una colonna di nome shape ad ogni tabella che dovra avere shape ( già fatto su anagrafica)
+   2) andare sulla tabella scelta -> Visualizza -> Modifica -> Cambiare il formato da 'Valore' a 'Espressione' e inserire tutto il campo 'Geometry' del GEOJSON nella funzione ST_GeomFromGeoJSON tra apici.
+   ESEMPIO :
+   ST_GeomFromGeoJSON('{"type": "MultiPolygon", "coordinates": [ [ [ [ 11.236960037078143, 44.005560919082903 ], [ 11.237053995842189, 44.005186891517916 ], [ 11.237204387423315, 44.005202492301706 ], [ 11.237213841121083, 44.005165304469202 ], [ 11.237228675549485, 44.005111985758582 ], [ 11.237245507944781, 44.00503882113123 ], [ 11.237250425793967, 44.00501369623742 ], [ 11.236990341489506, 44.004986739246903 ], [ 11.236987217766785, 44.005003186033569 ], [ 11.236565271839195, 44.004957430452677 ], [ 11.236556158340257, 44.004997042403978 ], [ 11.236532648790185, 44.005121565211873 ], [ 11.236521630757325, 44.005176879814236 ], [ 11.23640993628956, 44.005165382124353 ], [ 11.236397135956054, 44.005219741272285 ], [ 11.236421190617001, 44.005222397565362 ], [ 11.236450627045066, 44.005225648145533 ], [ 11.236526283816632, 44.005234002668885 ], [ 11.236558079796259, 44.005237513776443 ], [ 11.236613198306246, 44.005243600279165 ], [ 11.236601544065156, 44.005301898363008 ], [ 11.236657706851062, 44.005307793818055 ], [ 11.236658648003328, 44.005307892611377 ], [ 11.236674378711033, 44.005228627546764 ], [ 11.236685393227347, 44.005173222968345 ], [ 11.236690227259666, 44.005149180109917 ], [ 11.236825988233985, 44.005163807458842 ], [ 11.236806272345166, 44.005261496477907 ], [ 11.236780984176949, 44.005386794805069 ], [ 11.236756442696947, 44.005384304379334 ], [ 11.236725893519154, 44.00553723474993 ], [ 11.236960037078143, 44.005560919082903 ] ] ] ] }')
+   VERRANNO MOSTRATI AL COMPLETAMENTO UNA SERIE DI NUMERI, NON PREOCCUPATEVI E' NORMALE.
+   
+   
+   
+  SQL PER LA MODIFICA!!!! (E' una prova, cambiatela con il giusto shape prima di usarla) 
+  
+  UPDATE "schema_db_alternanza"."anagrafiche" SET "shape"=ST_GeomFromGeoJSON('{ "type": "MultiPolygon", "coordinates": [ [ [ [ 11.236545736487379, 44.004955382140885 ], [ 11.236553293896051, 44.004917511245544 ], [ 11.236484555872584, 44.004910433899497 ], [ 11.23648131453109, 44.00491001449992 ], [ 11.236473732950348, 44.004947878957111 ], [ 11.23634385714821, 44.004934447430067 ], [ 11.236052118151092, 44.004904275732912 ], [ 11.236049499058824, 44.004917561536686 ], [ 11.235968187213594, 44.004904658346234 ], [ 11.235961891880006, 44.004936292370552 ], [ 11.236044038632688, 44.004944857741407 ], [ 11.236000336297742, 44.005122893928167 ], [ 11.23640993628956, 44.005165382124353 ], [ 11.236521630757325, 44.005176879814236 ], [ 11.236532648790185, 44.005121565211873 ], [ 11.236556158340257, 44.004997042403978 ], [ 11.236565271839195, 44.004957430452677 ], [ 11.236545736487379, 44.004955382140885 ] ] ] ] }') WHERE "idanagrafica"='1'
+  
+  
+  
+ removelayersgeojson->> https://gis.stackexchange.com/questions/41928/adding-removing-leaflet-geojson-layers
+  $(document).on(....) ---->http://jsfiddle.net/DhWmP/
+  SELECT AUTOCOMPLETE ->> https://jqueryui.com/autocomplete/#multiple
