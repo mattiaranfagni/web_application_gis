@@ -10,12 +10,17 @@ $(document).ready(function() {
         $('#optCol').height($(window).height());
     });
     var map = new L.Map('mapid', { center: new L.LatLng(44.005560919082903,11.236960037078143), zoom: 12});
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-    map.eachLayer(function(layer) {
+    L.esri.basemapLayer('Imagery').addTo(map);
+    L.esri.dynamicMapLayer({
+    url: 'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer',
+    opacity: 0.7
+  }).addTo(map);
+    //L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+    /*map.eachLayer(function(layer) {
         if(typeof layer._url === "undefined") {
             map.removeLayer(layer);
         }
-    });
+    });*/
     $('.progress').show();
    $.getJSON('/MVC_GIS/models/getdata.php',function(response) {
         if(response) {
@@ -39,10 +44,10 @@ $(document).ready(function() {
                 geojsonfile.features.push(feature);
                 table.append('<tr> <td>'+v['idanagrafica']+'</td> <td>'+v['codiceanagrafica']+'</td> <td>'+v['denominazione']+'</td> <td>'+v['documento']+'</td>  </tr>');
             });
-            layeranagrafiche = L.geoJSON(geojsonfile, {
+            L.geoJSON(geojsonfile, {
                 onEachFeature: function(feature, layer) {
                     var html='<table class="responsive-table striped">';
-                    for(prop in feature.properties) {
+                    for(var prop in feature.properties) {
                         html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
                     };
                     //html += '<input type="hidden" value="'+feature.properties['idanagrafica']+'">';
@@ -68,17 +73,81 @@ $(document).ready(function() {
                 $('#comune').trigger("loadSelect");
             }
         });
+        
     });
-    
     $('#btnAnagrafiche').click(function() {
         $('#contentEv').empty();
         $('#contentEv').append(table); 
     });
     $(document).on('click','#btnSearch',function(){
-        //map.removeLayer(layeranagrafiche);
+        $('#collections').remove();
+        map.eachLayer(function(layer) {
+            if(typeof layer._url === "undefined") {
+                map.removeLayer(layer);
+            }
+        });
+        var search=$('<ul id="collections" class="collapsible" data-collapsible="accordion"> </ul>');
+        $.getJSON('/MVC_GIS/models/search.php',{ denom : $('#denominazione').val(),comune: $('#comune').val() },function(response) {
+            if(response) {
+                var geojsonfile= {
+                "type": "FeatureCollection",
+                "features": []
+                };
+                $.each(response,function(k,v) {
+                        search.append('<li><div value="'+v['idanagrafica']+'" class="optsearch collapsible-header">'+v['denominazione']+'</div><div class="collapsible-body"><table> <tr> <th> Codice anagrafica </th> <td>'+v['codiceanagrafica']+'</td> </tr> <tr> <th> Denominazione </th> <td>'+v['denominazione']+'</td> </tr> <tr> <th> Documento </th> <td>'+v['documento']+'</td> </tr> <tr> <th> Indirizzo </th> <td>'+v['indirizzo']+'</td> </tr> <tr> <th> Comune </th> <td>'+v['nomecomune']+'</td> </tr> <tr> <th> Codice Istat comune </th> <td>'+v['idcomune']+'</td> </tr> <tr> <th> Numero medio di persone </th> <td>'+v['nmedpers']+'</td> </tr> <tr> <th> Numero massimo di persone </th> <td>'+v['nmaxpers']+'</td> </tr> <tr> <th> Mesi di utilizzo all'+"'"+' anno </th> <td>'+v['mesianno']+'</td> </tr> <tr> <th> Foglio </th> <td>'+v['foglio']+'</td> </tr> <tr> <th> Ore di utilizzo giornaliere </th> <td>'+v['hgg']+'</td> </tr> <tr> <th> Particella </th> <td>'+v['particella']+'</td> </tr> <tr> <th> Posizione Edificio </th> <td>'+v['posizioneedificio']+'</td> </tr> <tr> <th> Propriet&agrave; </th> <td>'+v['proprieta']+'</td> </tr> <tr> <th> Numero unit&agrave; strutturali </th> <td>'+v['numerous']+'</td> </tr></table></div></li>');
+                        var feature = {
+                        "type": "Feature",
+                        "properties": {
+                            "idanagrafica": v['idanagrafica'],
+                            "codiceanagrafica": v['codiceanagrafica'],
+                            "documento": v['documento'],
+                            "Denominazione" : v['denominazione'],
+                        },
+                        "geometry": JSON.parse(v['shape'])
+                        }
+                        geojsonfile.features.push(feature);
+                });
+                L.geoJSON(geojsonfile, {
+                onEachFeature: function(feature, layer) {
+                    var html='<table class="responsive-table striped">';
+                    for(var prop in feature.properties) {
+                        html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
+                    };
+                    html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['idanagrafica']+'" type="button" > Show more </button> </div>';
+                    layer.bindPopup(html);
+                }
+                }).addTo(map);
+                $('#contentEv').append(search);
+                $('.collapsible').collapsible();
+            }
+        });
+        
     });
     $(document).on('loadSelect','#comune', function() {
         $('#comune').material_select();
+    });
+    $(document).on('click','.optsearch', function() {
+         var idanag = $(this).attr('value');
+         $.getJSON('/MVC_GIS/models/getsingleshapeanag.php',{idanag : idanag}, function(response) 
+            {
+                var geojsonfile= {
+                "type": "FeatureCollection",
+                "features": []
+                };
+                $.each(response,function(k, v) {
+                    var feature = {
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": JSON.parse(v['shape'])
+                    }
+                    geojsonfile.features.push(feature);
+                });
+               // alert(JSON.stringify(geojsonfile));
+                
+                var mappa = L.geoJSON(geojsonfile).addTo(map);
+                map.flyToBounds(mappa.getBounds());
+                map.removeLayer(mappa);
+         });
     });
     $(document).on('click','.btnshowmore',function(){
         $('#contentEv').empty();
