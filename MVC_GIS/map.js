@@ -15,6 +15,13 @@ $(document).ready(function() {
     url: 'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer',
     opacity: 0.7
   }).addTo(map);
+  /*var legend = L.control({position: 'bottomright'});
+  legend.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'info-legend');
+        div.innerHTML= ' <div ><p> <input id="anaglayer" type="checkbox" /><label for="anaglayer">Anagrafica</label></p><p><input id="uslayer" type="checkbox" /><label for="uslayer">Unit&agrave strutturali</label></p></div>';
+        return div;
+    };
+    legend.addTo(map);*/
     //L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
     /*map.eachLayer(function(layer) {
         if(typeof layer._url === "undefined") {
@@ -44,7 +51,7 @@ $(document).ready(function() {
                 geojsonfile.features.push(feature);
                 table.append('<tr> <td>'+v['idanagrafica']+'</td> <td>'+v['codiceanagrafica']+'</td> <td>'+v['denominazione']+'</td> <td>'+v['documento']+'</td>  </tr>');
             });
-            L.geoJSON(geojsonfile, {
+            L.geoJSON(geojsonfile,{
                 onEachFeature: function(feature, layer) {
                     var html='<table class="responsive-table striped">';
                     for(var prop in feature.properties) {
