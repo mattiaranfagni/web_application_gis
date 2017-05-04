@@ -10,3 +10,14 @@ position: relative;
 .pinned {
 position: fixed !important;
 }
+#mapid {
+    /*margin-top:64px;
+    height:90%;
+    display: block;*/
+}
+#bluenav,#rednav,#greennav {
+       z-index: 314169; 
+}
+.fixed-action-btn {
+    z-index: 314169;
+}
