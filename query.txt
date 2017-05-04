@@ -1,0 +1,21 @@
+1)anagrafiche (e relative US) con indagini aperte (in corso) e importo finanziato
+
+2)anagrafiche (e relative US) con indagini chiuse e importo finanziato
+
+3)anagrafiche (e relative US) con verifiche chiuse e importo finanziato
+
+4)anagrafiche (e relative US) con verifiche aperte (in corso) e importo finanziato
+
+5)anagrafiche (e relative US) con interventi chiusi e importo finanziato
+
+6)anagrafiche (e relative US) con interventi aperti (in corso) e importo finanziato
+
+7)anagrafiche (e relative US) con interventi chiusi e importo finanziato
+
+8)anagrafiche (e relative US) con interventi senza indagini e senza verifiche aperti (almeno uno in corso) e importo finanziato
+
+9)anagrafiche (e relative US) con interventi senza indagini e senza verifiche chiusi e importo finanziato
+
+
+1)SELECT *
+from schema_db_alternanza.anagrafiche as a inner join schema_db_alternanza.indagini as ind on a.codiceanagrafica=ind.idanagrafica inner join schema_db_alternanza.us as u on u.idanagrafica=a.codiceanagrafica
