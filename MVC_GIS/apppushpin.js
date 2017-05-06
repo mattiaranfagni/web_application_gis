@@ -1,19 +1,18 @@
 $(document).ready(function() {
-
-  $('.pushpin-demo-nav').each(function() {
-    var $this = $(this);
-    var $target = $('#' + $(this).attr('data-target'));
-    $this.pushpin({
-      top: $target.offset().top,
-      bottom: $target.offset().top + $target.outerHeight() - $this.height()
+    $('.pushpin-demo-nav').each(function() {
+      var $this = $(this);
+      var $target = $('#' + $(this).attr('data-target'));
+      $this.pushpin({
+        top: $target.offset().top,
+        bottom: $target.offset().top + $target.outerHeight() - $this.height()
+      });
     });
-  });
- // var navheight = $('#blue > nav-wrapper').height();
- // $('#mapid').css("margin-top",navheight);
- // $('#mapid').height($(window).height()-navheight);
- $('#mapid').height($('#sezmap').height()-$('#mapnav').height());
- $('#mapid').css("margin-top",$('#mapnav').height());
-    $(window).on('resize',function() {
+   // var navheight = $('#blue > nav-wrapper').height();
+   // $('#mapid').css("margin-top",navheight);
+   // $('#mapid').height($(window).height()-navheight);
+   $('#mapid').height($('#sezmap').height()-$('#mapnav').height());
+   $('#mapid').css("margin-top",$('#mapnav').height());
+  $(window).on('resize',function() {
       //$('#mapid').css("margin-top",navheight);
       //$('#mapid').height($(window).height()-navheight);
       $('#mapid').height($('#sezmap').height()-$('#mapnav').height());
@@ -25,6 +24,171 @@ $(document).ready(function() {
     url: 'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer',
     opacity: 0.7
   }).addTo(map);
+   $.getJSON('/MVC_GIS/models/getdata.php',function(response) {
+      if(response) {
+          var geojsonfile= {
+              "type": "FeatureCollection",
+              "features": []
+          };
+          $.each(response,function(k,v) {
+              var feature = {
+                  "type": "Feature",
+                  "properties": {
+                      "idanagrafica": v['idanagrafica'],
+                      "codiceanagrafica": v['codiceanagrafica'],
+                      "documento": v['documento'],
+                      "Denominazione" : v['denominazione'],
+                  },
+                  "geometry": JSON.parse(v['shape'])
+              }
+              geojsonfile.features.push(feature);
+          });
+          L.geoJSON(geojsonfile,{
+              onEachFeature: function(feature, layer) {
+                  var html='<table class="responsive-table striped">';
+                  for(var prop in feature.properties) {
+                      html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
+                  };
+                  html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['idanagrafica']+'" type="button" > Show more </button> </div>';
+                  layer.bindPopup(html);
+              }
+          }).addTo(map);
+
+          $('#mapid').trigger('loadSideNav');
+      }
+  });
+  $('#comune').material_select();
+  $.getJSON('/MVC_GIS/models/getcomuni.php',function(response) {
+            if(response) {
+                $.each(response,function(k,v) {
+                    $('#comune').append('<option value="'+v['codistatcomune']+'" >'+v['nomecomune']+'</option>');
+                });
+                $('#comune').trigger("loadSelect");
+            }
+  });
+  $(document).on('loadSelect','#comune', function() {
+        $('#comune').material_select();
+    });
+  $(document).on('loadSideNav','#mapid',function() {
+    $('.button-collapse').sideNav({
+      menuWidth: 500, // Default is 240
+      edge: 'right', // Choose the horizontal origin
+      closeOnClick: false // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    });
+
+  });
+  $(document).on('click','.btnshowmore',function() {
+    $('.button-collapse').sideNav('show');
+    $('#content-side-nav').empty();
+    $.getJSON('/MVC_GIS/models/getmore.php',{ idanag : $(this).val() },function(response) {
+            if(response) {
+                var table=$('<div class="collection"></div>');
+                    $.each(response,function(k,v) {
+                        //table.append('<tr> <th> Codice anagrafica </th> <td>'+v['codiceanagrafica']+'</td> </tr> <tr> <th> Denominazione </th> <td>'+v['denominazione']+'</td> </tr> <tr> <th> Documento </th> <td>'+v['documento']+'</td> </tr> <tr> <th> Indirizzo </th> <td>'+v['indirizzo']+'</td> </tr> <tr> <th> Comune </th> <td>'+v['nomecomune']+'</td> </tr> <tr> <th> Codice Istat comune </th> <td>'+v['idcomune']+'</td> </tr> <tr> <th> Numero medio di persone </th> <td>'+v['nmedpers']+'</td> </tr> <tr> <th> Numero massimo di persone </th> <td>'+v['nmaxpers']+'</td> </tr> <tr> <th> Mesi di utilizzo all'+"'"+' anno </th> <td>'+v['mesianno']+'</td> </tr> <tr> <th> Foglio </th> <td>'+v['foglio']+'</td> </tr> <tr> <th> Ore di utilizzo giornaliere </th> <td>'+v['hgg']+'</td> </tr> <tr> <th> Particella </th> <td>'+v['particella']+'</td> </tr> <tr> <th> Posizione Edificio </th> <td>'+v['posizioneedificio']+'</td> </tr> <tr> <th> Propriet&agrave; </th> <td>'+v['proprieta']+'</td> </tr> <tr> <th> Numero unit&agrave; strutturali </th> <td>'+v['numerous']+'</td> </tr>');
+                        table.append('<a class="collection-item active"><b>Codice Anagrafica</b> &nbsp '+v['codiceanagrafica']+'</a><a class="collection-item"><b>Denominazione</b> &nbsp '+v['denominazione']+'</a><a class="collection-item"><b>Documento</b> &nbsp '+v['documento']+'</a><a class="collection-item"><b>Indirizzo</b> &nbsp '+v['indirizzo']+'</a><a class="collection-item"><b>Comune</b> &nbsp '+v['nomecomune']+'</a><a class="collection-item"><b>Codice Istat Comune</b> &nbsp '+v['idcomune']+'</a><a class="collection-item"><b>Numero massimo di persone </b> &nbsp '+v['nmaxpers']+'</a><a class="collection-item"><b> Mesi di utilizzo all'+"'"+' anno</b> &nbsp '+v['mesianno']+'</a><a class="collection-item"><b> Foglio </b> &nbsp '+v['foglio']+'</a><a class="collection-item"><b> Ore di utilizzo giornaliere </b> &nbsp '+v['hgg']+'</a><a class="collection-item"><b> Particella </b> &nbsp '+v['particella ']+'</a><a class="collection-item"><b> Posizione Edificio </b> &nbsp '+v['posizioneedificio']+'</a><a class="collection-item"><b>Propriet&agrave; </b> &nbsp '+v['proprieta']+'</a> <a class="collection-item"><b> Numero di unit&agrave; strutturali </b> &nbsp '+v['numerous']+'</a>');
+                    });            
+                $('#content-side-nav').append(table);
+                
+            }
+        });
+  });
+  
+$('#btnSearch').click(function(){
+        $('#search-result').empty();
+        map.eachLayer(function(layer) {
+            if(typeof layer._url === "undefined") {
+                map.removeLayer(layer);
+            }
+        });
+        var search=$('<div class="collection"></div>');
+        $.getJSON('/MVC_GIS/models/search.php',{ denom : $('#denominazione').val(),comune: $('#comune').val() },function(response) {
+            if(response) {
+                var geojsonfile= {
+                "type": "FeatureCollection",
+                "features": []
+                };
+                $.each(response,function(k,v) {
+                        search.append('<a class="collection-item onresult" value="'+v['idanagrafica']+'"><b>'+v['codiceanagrafica']+'</b> &nbsp '+v['denominazione']+'</a>');
+                        var feature = {
+                        "type": "Feature",
+                        "properties": {
+                            "idanagrafica": v['idanagrafica'],
+                            "codiceanagrafica": v['codiceanagrafica'],
+                            "documento": v['documento'],
+                            "Denominazione" : v['denominazione'],
+                        },
+                        "geometry": JSON.parse(v['shape'])
+                        }
+                        geojsonfile.features.push(feature);
+                });
+                L.geoJSON(geojsonfile, {
+                onEachFeature: function(feature, layer) {
+                    var html='<table class="responsive-table striped">';
+                    for(var prop in feature.properties) {
+                        html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
+                    };
+                    html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['idanagrafica']+'" type="button" > Show more </button> </div>';
+                    layer.bindPopup(html,{closeButton:true,autoClose:false});
+                }
+                }).addTo(map);
+                $('#search-result').append(search);
+            }
+        });
+        
+    });
+  
+   $(document).on('click','.onresult',function() {
+     var idanag = $(this).attr('value');
+     $("html, body").stop(true,true).animate({ scrollTop: 0 }, "slow","swing",function() {
+        
+         });
+         
+         $.getJSON('/MVC_GIS/models/getsingleshapeanag.php',{idanag : idanag}, function(response) 
+            {
+              if(response) 
+              {
+                  var geojsonfile= {
+                  "type": "FeatureCollection",
+                  "features": []
+                  };
+                  $.each(response,function(k, v) {
+                      var feature = {
+                          "type": "Feature",
+                          "properties": {},
+                          "geometry": JSON.parse(v['shape'])
+                      }
+                      geojsonfile.features.push(feature);
+                  });
+                  var mappa = L.geoJSON(geojsonfile, {
+                onEachFeature: function(feature, layer) {
+                    var html='<table class="responsive-table striped">';
+                    for(var prop in feature.properties) {
+                        html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
+                    };
+                    html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['idanagrafica']+'" type="button" > Show more </button> </div>';
+                    layer.bindPopup(html,{closeButton:true,autoClose:false});
+                }
+                }).addTo(map);
+                  
+                  map.flyToBounds(mappa.getBounds());
+                  map.removeLayer(mappa);
+                  
+              }
+            });
+            $('.button-collapse').sideNav('show');
+            $('#content-side-nav').empty();
+            $.getJSON('/MVC_GIS/models/getmore.php',{ idanag : idanag },function(response) {
+                    if(response) {
+                        var table=$('<div class="collection"></div>');
+                            $.each(response,function(k,v) {
+                                //table.append('<tr> <th> Codice anagrafica </th> <td>'+v['codiceanagrafica']+'</td> </tr> <tr> <th> Denominazione </th> <td>'+v['denominazione']+'</td> </tr> <tr> <th> Documento </th> <td>'+v['documento']+'</td> </tr> <tr> <th> Indirizzo </th> <td>'+v['indirizzo']+'</td> </tr> <tr> <th> Comune </th> <td>'+v['nomecomune']+'</td> </tr> <tr> <th> Codice Istat comune </th> <td>'+v['idcomune']+'</td> </tr> <tr> <th> Numero medio di persone </th> <td>'+v['nmedpers']+'</td> </tr> <tr> <th> Numero massimo di persone </th> <td>'+v['nmaxpers']+'</td> </tr> <tr> <th> Mesi di utilizzo all'+"'"+' anno </th> <td>'+v['mesianno']+'</td> </tr> <tr> <th> Foglio </th> <td>'+v['foglio']+'</td> </tr> <tr> <th> Ore di utilizzo giornaliere </th> <td>'+v['hgg']+'</td> </tr> <tr> <th> Particella </th> <td>'+v['particella']+'</td> </tr> <tr> <th> Posizione Edificio </th> <td>'+v['posizioneedificio']+'</td> </tr> <tr> <th> Propriet&agrave; </th> <td>'+v['proprieta']+'</td> </tr> <tr> <th> Numero unit&agrave; strutturali </th> <td>'+v['numerous']+'</td> </tr>');
+                                table.append('<a class="collection-item active"><b>Codice Anagrafica</b> &nbsp '+v['codiceanagrafica']+'</a><a class="collection-item"><b>Denominazione</b> &nbsp '+v['denominazione']+'</a><a class="collection-item"><b>Documento</b> &nbsp '+v['documento']+'</a><a class="collection-item"><b>Indirizzo</b> &nbsp '+v['indirizzo']+'</a><a class="collection-item"><b>Comune</b> &nbsp '+v['nomecomune']+'</a><a class="collection-item"><b>Codice Istat Comune</b> &nbsp '+v['idcomune']+'</a><a class="collection-item"><b>Numero massimo di persone </b> &nbsp '+v['nmaxpers']+'</a><a class="collection-item"><b> Mesi di utilizzo all'+"'"+' anno</b> &nbsp '+v['mesianno']+'</a><a class="collection-item"><b> Foglio </b> &nbsp '+v['foglio']+'</a><a class="collection-item"><b> Ore di utilizzo giornaliere </b> &nbsp '+v['hgg']+'</a><a class="collection-item"><b> Particella </b> &nbsp '+v['particella ']+'</a><a class="collection-item"><b> Posizione Edificio </b> &nbsp '+v['posizioneedificio']+'</a><a class="collection-item"><b>Propriet&agrave; </b> &nbsp '+v['proprieta']+'</a> <a class="collection-item"><b> Numero di unit&agrave; strutturali </b> &nbsp '+v['numerous']+'</a>');
+                            });            
+                        $('#content-side-nav').append(table);
+                        
+                    }
+                });
+   });
   
   $('#mappabtn').click(function() {
     $("html, body").animate({ scrollTop: 0 }, "slow");

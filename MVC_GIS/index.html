@@ -17,6 +17,16 @@
         <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
         <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
         <script src="apppushpin.js"></script>
+        <ul id="slide-out" class="side-nav">
+            <nav class="top-nav green lighten-2">
+                <div class="container">
+                  <div class="nav-wrapper"><a class="brand-logo"><i class="material-icons">place</i>Informazioni Anagrafica</a></div>
+                </div>
+            </nav>
+            <div id="content-side-nav">
+                
+            </div>
+        </ul>
             <div id="sezmap" class="block">
               <nav id="mapnav" class="pushpin-demo-nav " data-target="sezmap" >
                 <div class="nav-wrapper green lighten-1">
@@ -73,6 +83,9 @@
                       </div>
                 </div>
               </form>
+              <div class="col s12 m6" id="search-result" style="overflow-y: scroll; max-height: 400px;">
+                  
+              </div>
             </div>
           </div>
         </div>
@@ -195,6 +208,7 @@
               <i class="large material-icons">menu</i>
             </a>
             <ul>
+              <li><a id="btncollapse" data-activates="slide-out" class="button-collapse" style="display: none;"><i class="material-icons">place</i></a></li>
               <li><a id="mappabtn" class="waves-effect waves-light btn-floating btn-large green lighten-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Sezione Mappa"><i class="material-icons">place</i></a></li>
               <li><a id="ricercabtn" class="waves-effect waves-light btn-floating btn-large red lighten-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Sezione Ricerca"><i class="material-icons">search</i></a></li>
               <li><a id="inserimentobtn"class="waves-effect waves-light btn-floating btn-large blue lighten-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Sezione Inserimento"><i class="material-icons">publish</i></a></li>

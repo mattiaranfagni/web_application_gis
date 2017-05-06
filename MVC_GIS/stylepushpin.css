@@ -1,5 +1,9 @@
 html, body, .block {
 height: 100%;
+
+}
+body::-webkit-scrollbar { 
+    display: none; 
 }
 .pin-top {
 position: relative;
@@ -35,4 +39,10 @@ position: fixed !important;
 }
 #divric {
     padding-top: 5%;
+}
+#slide-out {
+    z-index: 314174;
+}
+#slide-out {
+    overflow-y: scroll;
 }
