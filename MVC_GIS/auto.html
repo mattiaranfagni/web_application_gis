@@ -17,7 +17,7 @@
         <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
         <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
         <script src="apppushpin.js"></script>
-            <div id="blue" class="block blue">
+            <div id="blue" class="block">
               <nav id="bluenav" class="pushpin-demo-nav " data-target="blue" >
                 <div class="nav-wrapper light-blue">
                   <div class="container">
@@ -36,7 +36,7 @@
               <div class="" id="mapid" ></div>
             </div>
         
-        <div id="red" class="block red lighten-1">
+        <div id="red" class="block">
           <nav id="rednav" class="pushpin-demo-nav " data-target="red" >
             <div class="nav-wrapper red">
               <div class="container">
@@ -49,13 +49,36 @@
               </div>
             </div>
             <div class="nav-content">
-                  we wagliu!!!
             </div>
+            
           </nav>
+          <div id="divric">
+            <div class="row">
+              <form class="col s12 m6">
+                <div class="row"> 
+                  <div class="input-field col s12">
+                    <textarea id="denominazione" class="materialize-textarea"></textarea>
+                    <label for="denominazione">Denominazione</label>
+                  </div>
+                </div>
+                <div class="input-field col s6">
+                  <select id="comune"> 
+                  <option value="0" selected>Non specificato</option> 
+                  </select> 
+                  <label>Comune</label>
+                </div>
+                <div class="row">
+                      <div class="input-field col s6">
+                        <button type="button" class="waves-effect waves-light btn" id="btnSearch">Cerca</button>
+                      </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <div id="green" class="block green lighten-1">
-          <nav id="greennav" class="pushpin-demo-nav pin-top" data-target="green" style="top: 0px;">
-            <div class="nav-wrapper green">
+        <div id="green" class="block ">
+          <nav id="greennav" class="nav-extended row pushpin-demo-nav pin-top green" data-target="green" style="top: 0px;">
+            <div class="nav-wrapper col s12">
               <div class="container">
                 <a href="#" class="brand-logo">Green</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -66,9 +89,60 @@
               </div>
             </div>
             <div class="nav-content">
-              118!!!!!
+              <ul class="tabs tabs-transparent">
+                <li class="tab"><a href="#test1">Test 1</a></li>
+                <li class="tab"><a class="active" href="#test2">Test 2</a></li>
+                <li class="tab disabled"><a href="#test3">Disabled Tab</a></li>
+                <li class="tab"><a href="#test4">Test 4</a></li>
+              </ul>
             </div>
           </nav>
+            <div id="test1" class="insform col s12">
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                    <label for="first_name">First Name</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input disabled value="I am not editable" id="disabled" type="text" class="validate">
+                    <label for="disabled">Disabled</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    This is an inline input field:
+                    <div class="input-field inline">
+                      <input id="email" type="email" class="validate">
+                      <label for="email" data-error="wrong" data-success="right">Email</label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            </div>
+            <div id="test2" class="insform col s12">Test 2</div>
+            <div id="test3" class="insform col s12">Test 3</div>
+            <div id="test4" class="insform col s12">Test 4</div>
         </div>
         
          <div class="fixed-action-btn">
@@ -78,7 +152,7 @@
             <ul>
               <li><a id="mappabtn" class="btn-floating btn-large red"><i class="material-icons">insert_chart</i></a></li>
               <li><a id="ricercabtn" class="btn-floating btn-large yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-              <li><a id="inserimentobtn" class="btn-floating btn-large green"><i class="material-icons">publish</i></a></li>
+              <li><a id="inserimentobtn"class="btn-floating btn-large green"><i class="material-icons">publish</i></a></li>
             </ul>
           </div>
         

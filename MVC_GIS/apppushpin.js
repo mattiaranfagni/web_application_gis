@@ -30,8 +30,11 @@ $(document).ready(function() {
     $("html, body").animate({ scrollTop: 0 }, "slow");
   });
   $('#ricercabtn').click(function() {
-      var elementOffset = $('#red').offset().top;
-      $("html, body").animate({ scrollTop: elementOffset }, "slow");
+    var elementOffset = $('#red').offset().top;
+    $("html, body").animate({ scrollTop: elementOffset }, "slow","swing",function() {
+      elementOffset = $('#red').offset().top;
+      $("html, body").animate({ scrollTop: elementOffset }, "slow"); 
+    });
   });
     $('#inserimentobtn').click(function() {
       var elementOffset = $('#green').offset().top;

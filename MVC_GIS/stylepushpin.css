@@ -15,9 +15,24 @@ position: fixed !important;
     height:90%;
     display: block;*/
 }
-#bluenav,#rednav,#greennav {
-       z-index: 314169; 
-}
+
 .fixed-action-btn {
-    z-index: 314169;
+    z-index: 314173;
+}
+
+#red {
+    z-index: 314170;
+}
+#green {
+    z-index: 314171;
+}
+#bluenav,#rednav,#greennav {
+       z-index: 314172; 
+}
+
+.insform {
+    padding-top: 10%;
+}
+#divric {
+    padding-top: 5%;
 }
