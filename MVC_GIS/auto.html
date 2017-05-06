@@ -17,11 +17,11 @@
         <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
         <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
         <script src="apppushpin.js"></script>
-            <div id="blue" class="block">
-              <nav id="bluenav" class="pushpin-demo-nav " data-target="blue" >
-                <div class="nav-wrapper light-blue">
+            <div id="sezmap" class="block">
+              <nav id="mapnav" class="pushpin-demo-nav " data-target="sezmap" >
+                <div class="nav-wrapper green lighten-1">
                   <div class="container">
-                    <a href="#" class="brand-logo">Blue</a>
+                    <a href="#" class="brand-logo"><i class="material-icons">place</i> Mappa</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                       <li><a href="#!">Blue Link 1</a></li>
                       <li><a href="#!">Blue Link 2</a></li>
@@ -36,11 +36,11 @@
               <div class="" id="mapid" ></div>
             </div>
         
-        <div id="red" class="block">
-          <nav id="rednav" class="pushpin-demo-nav " data-target="red" >
-            <div class="nav-wrapper red">
+        <div id="sezric" class="block">
+          <nav id="ricnav" class="pushpin-demo-nav " data-target="sezric" >
+            <div class="nav-wrapper red lighten-1">
               <div class="container">
-                <a href="#" class="brand-logo">Red</a>
+                <a href="#" class="brand-logo"><i class="material-icons">search</i> Ricerca</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li><a href="#!">Red Link 1</a></li>
                   <li><a href="#!">Red Link 2</a></li>
@@ -76,11 +76,11 @@
             </div>
           </div>
         </div>
-        <div id="green" class="block ">
-          <nav id="greennav" class="nav-extended row pushpin-demo-nav pin-top green" data-target="green" style="top: 0px;">
+        <div id="sezins" class="block ">
+          <nav id="insnav" class="nav-extended row pushpin-demo-nav pin-top blue lighten-1" data-target="sezins" style="top: 0px;">
             <div class="nav-wrapper col s12">
               <div class="container">
-                <a href="#" class="brand-logo">Green</a>
+                <a href="#" class="brand-logo"><i class="material-icons">publish</i> Inserimento</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li><a href="#!">Green Link 1</a></li>
                   <li><a href="#!">Green Link 2</a></li>
@@ -90,15 +90,16 @@
             </div>
             <div class="nav-content">
               <ul class="tabs tabs-transparent">
-                <li class="tab"><a href="#test1">Test 1</a></li>
-                <li class="tab"><a class="active" href="#test2">Test 2</a></li>
-                <li class="tab disabled"><a href="#test3">Disabled Tab</a></li>
+                <li class="tab"><a href="#formanagrafica" class="active">Anagrafica</a></li>
+                <li class="tab"><a class="" href="#formus">US</a></li>
+                <li class="tab "><a href="#formfinanziamento">Finanziamento</a></li>
                 <li class="tab"><a href="#test4">Test 4</a></li>
               </ul>
             </div>
           </nav>
-            <div id="test1" class="insform col s12">
+            <div id="formanagrafica" class="insform col s12">
             <div class="row">
+              <p class="col s12 flow-text">Inserimento Anagrafica</p>
               <form class="col s12">
                 <div class="row">
                   <div class="input-field col s6">
@@ -140,19 +141,63 @@
               </form>
             </div>
             </div>
-            <div id="test2" class="insform col s12">Test 2</div>
-            <div id="test3" class="insform col s12">Test 3</div>
+            <div id="formus" class="insform col s12">
+              <div class="row">
+                <p class="col s12 flow-text">Inserimento Unit&agrave; strutturale</p>
+                  <form class="col s12">
+                    <div class="row">
+                      <div class="input-field col s6">
+                        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                        <label for="first_name">First Name</label>
+                      </div>
+                      <div class="input-field col s6">
+                        <input id="last_name" type="text" class="validate">
+                        <label for="last_name">Last Name</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input disabled value="I am not editable" id="disabled" type="text" class="validate">
+                        <label for="disabled">Disabled</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col s12">
+                        This is an inline input field:
+                        <div class="input-field inline">
+                          <input id="email" type="email" class="validate">
+                          <label for="email" data-error="wrong" data-success="right">Email</label>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+            </div>  
+            
+            </div>
+            <div id="formfinanziamento" class="insform col s12">Test 3</div>
             <div id="test4" class="insform col s12">Test 4</div>
         </div>
         
          <div class="fixed-action-btn">
             <a class="btn-floating btn-large red">
-              <i class="large material-icons">mode_edit</i>
+              <i class="large material-icons">menu</i>
             </a>
             <ul>
-              <li><a id="mappabtn" class="btn-floating btn-large red"><i class="material-icons">insert_chart</i></a></li>
-              <li><a id="ricercabtn" class="btn-floating btn-large yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-              <li><a id="inserimentobtn"class="btn-floating btn-large green"><i class="material-icons">publish</i></a></li>
+              <li><a id="mappabtn" class="waves-effect waves-light btn-floating btn-large green lighten-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Sezione Mappa"><i class="material-icons">place</i></a></li>
+              <li><a id="ricercabtn" class="waves-effect waves-light btn-floating btn-large red lighten-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Sezione Ricerca"><i class="material-icons">search</i></a></li>
+              <li><a id="inserimentobtn"class="waves-effect waves-light btn-floating btn-large blue lighten-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Sezione Inserimento"><i class="material-icons">publish</i></a></li>
             </ul>
           </div>
         

@@ -11,13 +11,13 @@ $(document).ready(function() {
  // var navheight = $('#blue > nav-wrapper').height();
  // $('#mapid').css("margin-top",navheight);
  // $('#mapid').height($(window).height()-navheight);
- $('#mapid').height($('#blue').height()-$('#bluenav').height());
- $('#mapid').css("margin-top",$('#bluenav').height());
+ $('#mapid').height($('#sezmap').height()-$('#mapnav').height());
+ $('#mapid').css("margin-top",$('#mapnav').height());
     $(window).on('resize',function() {
       //$('#mapid').css("margin-top",navheight);
       //$('#mapid').height($(window).height()-navheight);
-      $('#mapid').height($('#blue').height()-$('#bluenav').height());
-      $('#mapid').css("margin-top",$('#bluenav').height());
+      $('#mapid').height($('#sezmap').height()-$('#mapnav').height());
+      $('#mapid').css("margin-top",$('#mapnav').height());
   });
     var map = new L.Map('mapid', { center: new L.LatLng(44.005560919082903,11.236960037078143), zoom: 12});
     L.esri.basemapLayer('Imagery').addTo(map);
@@ -30,14 +30,14 @@ $(document).ready(function() {
     $("html, body").animate({ scrollTop: 0 }, "slow");
   });
   $('#ricercabtn').click(function() {
-    var elementOffset = $('#red').offset().top;
-    $("html, body").animate({ scrollTop: elementOffset }, "slow","swing",function() {
-      elementOffset = $('#red').offset().top;
-      $("html, body").animate({ scrollTop: elementOffset }, "slow"); 
+    var elementOffset = $('#sezric').offset().top;
+    $("html, body").stop(true,true).animate({ scrollTop: elementOffset }, "slow","swing",function() {
+      elementOffset = $('#sezric').offset().top;
+      $("html, body").stop(true,true).animate({ scrollTop: elementOffset }, "slow"); 
     });
   });
     $('#inserimentobtn').click(function() {
-      var elementOffset = $('#green').offset().top;
+      var elementOffset = $('#sezins').offset().top;
       $("html, body").animate({ scrollTop: elementOffset }, "slow");
   });
 

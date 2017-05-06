@@ -20,18 +20,18 @@ position: fixed !important;
     z-index: 314173;
 }
 
-#red {
+#sezric {
     z-index: 314170;
 }
-#green {
+#sezins {
     z-index: 314171;
 }
-#bluenav,#rednav,#greennav {
+#mapnav,#ricnav,#insnav {
        z-index: 314172; 
 }
 
 .insform {
-    padding-top: 10%;
+    padding-top: 6%;
 }
 #divric {
     padding-top: 5%;
