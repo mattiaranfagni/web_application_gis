@@ -7,14 +7,9 @@ $(document).ready(function() {
         bottom: $target.offset().top + $target.outerHeight() - $this.height()
       });
     });
-   // var navheight = $('#blue > nav-wrapper').height();
-   // $('#mapid').css("margin-top",navheight);
-   // $('#mapid').height($(window).height()-navheight);
    $('#mapid').height($('#sezmap').height()-$('#mapnav').height());
    $('#mapid').css("margin-top",$('#mapnav').height());
   $(window).on('resize',function() {
-      //$('#mapid').css("margin-top",navheight);
-      //$('#mapid').height($(window).height()-navheight);
       $('#mapid').height($('#sezmap').height()-$('#mapnav').height());
       $('#mapid').css("margin-top",$('#mapnav').height());
   });
@@ -57,17 +52,26 @@ $(document).ready(function() {
           $('#mapid').trigger('loadSideNav');
       }
   });
-  $('#comune').material_select();
+  $('select').material_select();
   $.getJSON('/MVC_GIS/models/getcomuni.php',function(response) {
             if(response) {
                 $.each(response,function(k,v) {
-                    $('#comune').append('<option value="'+v['codistatcomune']+'" >'+v['nomecomune']+'</option>');
+                    $('#comuneric').append('<option value="'+v['codistatcomune']+'" >'+v['nomecomune']+'</option>');
+                    $('#comuneanag').append('<option value="'+v['codistatcomune']+'" >'+v['nomecomune']+'</option>');
                 });
-                $('#comune').trigger("loadSelect");
+                $('#comuneric').trigger("loadSelect");
+                $('#comuneanag').trigger("loadSelect");
             }
   });
-  $(document).on('loadSelect','#comune', function() {
-        $('#comune').material_select();
+  
+  $(document).on('loadSelect','#comuneric', function() {
+        $('#comuneric').material_select();
+    });
+  $(document).on('loadSelect','#tipousotbl', function() {
+        $('#tipousotbl').material_select();
+    });
+    $(document).on('loadSelect','#comuneanag', function() {
+        $('#comuneanag').material_select();
     });
   $(document).on('loadSideNav','#mapid',function() {
     $('.button-collapse').sideNav({
@@ -91,6 +95,19 @@ $(document).ready(function() {
                 
             }
         });
+  });
+  $(document).on('change','#usotbl',function() {
+      if($('#usotbl').val() != 0 ){
+          $('#tipousotbl').empty();
+          $.getJSON('/MVC_GIS/models/gettipouso.php', {uso : $('#usotbl').val() } ,function(response) {
+                    if(response) {
+                        $.each(response,function(k,v) {
+                            $('#tipousotbl').append('<option value="'+v['idtipousotbl']+'" ><blockquote>'+v['idtipousotbl']+' </blockquote>'+v['tipouso']+'</option>');
+                        });
+                        $('#tipousotbl').trigger("loadSelect");
+                    }
+          });
+      }
   });
   
 $('#btnSearch').click(function(){

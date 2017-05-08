@@ -67,12 +67,12 @@
               <form class="col s12 m6">
                 <div class="row"> 
                   <div class="input-field col s12">
-                    <textarea id="denominazione" class="materialize-textarea"></textarea>
+                    <input id="denominazione" type="text"></input>
                     <label for="denominazione">Denominazione</label>
                   </div>
                 </div>
                 <div class="input-field col s6">
-                  <select id="comune"> 
+                  <select id="comuneric"> 
                   <option value="0" selected>Non specificato</option> 
                   </select> 
                   <label>Comune</label>
@@ -115,42 +115,86 @@
               <p class="col s12 flow-text">Inserimento Anagrafica</p>
               <form class="col s12">
                 <div class="row">
-                  <div class="input-field col s6">
-                    <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-                    <label for="first_name">First Name</label>
-                  </div>
-                  <div class="input-field col s6">
-                    <input id="last_name" type="text" class="validate">
-                    <label for="last_name">Last Name</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-                    <label for="disabled">Disabled</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="password" type="password" class="validate">
-                    <label for="password">Password</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
-                    <label for="email">Email</label>
-                  </div>
-                </div>
-                <div class="row">
                   <div class="col s12">
-                    This is an inline input field:
-                    <div class="input-field inline">
-                      <input id="email" type="email" class="validate">
-                      <label for="email" data-error="wrong" data-success="right">Email</label>
+                    Comune di appartenenza: 
+                    <div class="input-field inline ">
+                      <select id="comuneanag"> 
+                      </select> 
+                    </div>
+                  </div>
+                  <div class="col s6">
+                    Uso :  
+                    <div class="input-field inline ">
+                      <select id="usotbl"> 
+                      <option value="0" selected>Non specificato</option>
+                        <option value="S">Scuola</option>
+                        <option value="M">Municipio</option>
+                        <option value="O">Ospedale</option>
+                        <option value="A">Altro</option>
+                      </select> 
+                    </div>
+                  </div>
+                  <div class="col s6">
+                    Tipo uso :  
+                    <div class="input-field inline ">
+                      <select id="tipousotbl"> 
+                        <option value="0" selected>Non specificato</option>
+                      </select> 
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="codiceanagrafica" type="text" class="validate">
+                    <label for="codiceanagrafica">Codice anagrafica</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="denominazione" type="text" class="validate">
+                    <label for="denominazione">Denominazione</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="indirizzo" type="text" class="validate">
+                    <label for="indirizzo">Indirizzo</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="documento" type="text" class="validate">
+                    <label for="documento">Documento</label>
+                  </div>
+                  
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="nmedpers" type="text" placeholder="Numero medio di persone calcolate per la struttura" class="validate">
+                    <label for="nmedpers">Numero med persone</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="nmaxpers" type="text" placeholder="Numero massimo di persone calcolate per la struttura" class="validate">
+                    <label for="nmaxmerd">Numero max persone</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s6 m4">
+                    Propriet&agrave; :  
+                    <div class="input-field inline ">
+                      <select id="proprietatbl">
+                        <option value="0" selected>Non specificato</option>
+                        <option value="1">Comune</option>
+                        <option value="2">Comunit&agrave; montana</option>
+                        <option value="3">Provincia</option>
+                        <option value="4">Regione</option>
+                        <option value="5">Stato</option>
+                        <option value="6">ASL</option>
+                        <option value="7">Altro</option>
+                      </select> 
+                    </div>
+                  </div>
+                  
+                </div>
+                <!-- select comuni -->
+                <!-- proprieta-->
+                <!-- tipo uso tbl -->
               </form>
             </div>
             </div>
