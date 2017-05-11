@@ -1,4 +1,15 @@
 $(document).ready(function() {
+    var ar=new Array(33,34,35,36,37,38,39,40);
+    $(document).keydown(function(e) {
+         var key = e.which;
+          //console.log(key);
+          //if(key==35 || key == 36 || key == 37 || key == 39)
+          if($.inArray(key,ar) > -1) {
+              e.preventDefault();
+              return false;
+          }
+          return true;
+    });
     $('.pushpin-demo-nav').each(function() {
       var $this = $(this);
       var $target = $('#' + $(this).attr('data-target'));
@@ -40,7 +51,7 @@ $(document).ready(function() {
           });
           L.geoJSON(geojsonfile,{
               onEachFeature: function(feature, layer) {
-                  var html='<table class="responsive-table striped">';
+                  var html='<table class="highlighted">';
                   for(var prop in feature.properties) {
                       html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
                   };
@@ -63,7 +74,19 @@ $(document).ready(function() {
                 $('#comuneanag').trigger("loadSelect");
             }
   });
-  
+  $.getJSON('/MVC_GIS/models/getdenominazione.php',function(response) {
+            if(response) {
+                $('input.autocomplete').autocomplete({
+                    data: response,
+                    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+                    onAutocomplete: function(val) {
+                      // Callback function when value is autcompleted.
+                    },
+                    minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                });
+            }
+  });
+      
   $(document).on('loadSelect','#comuneric', function() {
         $('#comuneric').material_select();
     });
@@ -140,7 +163,7 @@ $('#btnSearch').click(function(){
                 });
                 L.geoJSON(geojsonfile, {
                 onEachFeature: function(feature, layer) {
-                    var html='<table class="responsive-table striped">';
+                    var html='<table class="highlighted">';
                     for(var prop in feature.properties) {
                         html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
                     };
@@ -214,8 +237,10 @@ $('#btnSearch').click(function(){
     var elementOffset = $('#sezric').offset().top;
     $("html, body").stop(true,true).animate({ scrollTop: elementOffset }, "slow","swing",function() {
       elementOffset = $('#sezric').offset().top;
-      $("html, body").stop(true,true).animate({ scrollTop: elementOffset }, "slow"); 
+      $("html, body").stop(true,true).animate({ scrollTop: elementOffset }, "slow");
     });
+
+
   });
     $('#inserimentobtn').click(function() {
       var elementOffset = $('#sezins').offset().top;
