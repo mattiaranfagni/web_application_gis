@@ -1,7 +1,7 @@
 <?php
 try {
     $dbh=new PDO('pgsql:host=127.0.0.1;port=5432;dbname=provapostgis_postgres;user=useraccessoqgis;password=ubuntu');
-    $stm= $dbh->prepare('SELECT denominazione FROM schema_db_alternanza.anagrafiche ;');
+    $stm= $dbh->prepare('SELECT denominazione FROM schema_db_alternanza.anagrafica ;');
     if($stm->execute()) {}
     $denominazioni = array();
     while($row = $stm->fetch() ){

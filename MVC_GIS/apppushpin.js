@@ -40,10 +40,9 @@ $(document).ready(function() {
               var feature = {
                   "type": "Feature",
                   "properties": {
-                      "idanagrafica": v['idanagrafica'],
-                      "codiceanagrafica": v['codiceanagrafica'],
+                      "codanagrafica": v['codanagrafica'],
                       "documento": v['documento'],
-                      "Denominazione" : v['denominazione'],
+                      "denominazione" : v['denominazione'],
                   },
                   "geometry": JSON.parse(v['shape'])
               }
@@ -55,7 +54,7 @@ $(document).ready(function() {
                   for(var prop in feature.properties) {
                       html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
                   };
-                  html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['idanagrafica']+'" type="button" > Show more </button> </div>';
+                  html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['codanagrafica']+'" type="button" > Show more </button> </div>';
                   layer.bindPopup(html);
               }
           }).addTo(map);
@@ -112,7 +111,7 @@ $(document).ready(function() {
                 var table=$('<div class="collection"></div>');
                     $.each(response,function(k,v) {
                         //table.append('<tr> <th> Codice anagrafica </th> <td>'+v['codiceanagrafica']+'</td> </tr> <tr> <th> Denominazione </th> <td>'+v['denominazione']+'</td> </tr> <tr> <th> Documento </th> <td>'+v['documento']+'</td> </tr> <tr> <th> Indirizzo </th> <td>'+v['indirizzo']+'</td> </tr> <tr> <th> Comune </th> <td>'+v['nomecomune']+'</td> </tr> <tr> <th> Codice Istat comune </th> <td>'+v['idcomune']+'</td> </tr> <tr> <th> Numero medio di persone </th> <td>'+v['nmedpers']+'</td> </tr> <tr> <th> Numero massimo di persone </th> <td>'+v['nmaxpers']+'</td> </tr> <tr> <th> Mesi di utilizzo all'+"'"+' anno </th> <td>'+v['mesianno']+'</td> </tr> <tr> <th> Foglio </th> <td>'+v['foglio']+'</td> </tr> <tr> <th> Ore di utilizzo giornaliere </th> <td>'+v['hgg']+'</td> </tr> <tr> <th> Particella </th> <td>'+v['particella']+'</td> </tr> <tr> <th> Posizione Edificio </th> <td>'+v['posizioneedificio']+'</td> </tr> <tr> <th> Propriet&agrave; </th> <td>'+v['proprieta']+'</td> </tr> <tr> <th> Numero unit&agrave; strutturali </th> <td>'+v['numerous']+'</td> </tr>');
-                        table.append('<a class="collection-item active"><b>Codice Anagrafica</b> &nbsp '+v['codiceanagrafica']+'</a><a class="collection-item"><b>Denominazione</b> &nbsp '+v['denominazione']+'</a><a class="collection-item"><b>Documento</b> &nbsp '+v['documento']+'</a><a class="collection-item"><b>Indirizzo</b> &nbsp '+v['indirizzo']+'</a><a class="collection-item"><b>Comune</b> &nbsp '+v['nomecomune']+'</a><a class="collection-item"><b>Codice Istat Comune</b> &nbsp '+v['idcomune']+'</a><a class="collection-item"><b>Numero massimo di persone </b> &nbsp '+v['nmaxpers']+'</a><a class="collection-item"><b> Mesi di utilizzo all'+"'"+' anno</b> &nbsp '+v['mesianno']+'</a><a class="collection-item"><b> Foglio </b> &nbsp '+v['foglio']+'</a><a class="collection-item"><b> Ore di utilizzo giornaliere </b> &nbsp '+v['hgg']+'</a><a class="collection-item"><b> Particella </b> &nbsp '+v['particella ']+'</a><a class="collection-item"><b> Posizione Edificio </b> &nbsp '+v['posizioneedificio']+'</a><a class="collection-item"><b>Propriet&agrave; </b> &nbsp '+v['proprieta']+'</a> <a class="collection-item"><b> Numero di unit&agrave; strutturali </b> &nbsp '+v['numerous']+'</a>');
+                        table.append('<a class="collection-item active"><b>Codice Anagrafica</b> &nbsp '+v['codanagrafica']+'</a><a class="collection-item"><b>Denominazione</b> &nbsp '+v['denominazione']+'</a><a class="collection-item"><b>Documento</b> &nbsp '+v['documento']+'</a><a class="collection-item"><b>Indirizzo</b> &nbsp '+v['indirizzo']+'</a><a class="collection-item"><b>Comune</b> &nbsp '+v['nomecomune']+'</a><a class="collection-item"><b>Codice Istat Comune</b> &nbsp '+v['codistatcomune']+'</a><a class="collection-item"><b>Numero massimo di persone </b> &nbsp '+v['nmaxpers']+'</a><a class="collection-item"><b> Mesi di utilizzo all'+"'"+' anno</b> &nbsp '+v['mesianno']+'</a><a class="collection-item"><b> Foglio </b> &nbsp '+v['foglio']+'</a><a class="collection-item"><b> Ore di utilizzo giornaliere </b> &nbsp '+v['hgg']+'</a><a class="collection-item"><b> Particella </b> &nbsp '+v['particella ']+'</a><a class="collection-item"><b> Posizione Edificio </b> &nbsp '+v['posizioneedificio']+'</a><a class="collection-item"><b>Propriet&agrave; </b> &nbsp '+v['idproprieta']+'</a> <a class="collection-item"><b> Numero di unit&agrave; strutturali </b> &nbsp '+v['numerous']+'</a>');
                     });            
                 $('#content-side-nav').append(table);
                 
@@ -125,7 +124,7 @@ $(document).ready(function() {
           $.getJSON('/MVC_GIS/models/gettipouso.php', {uso : $('#usotbl').val() } ,function(response) {
                     if(response) {
                         $.each(response,function(k,v) {
-                            $('#tipousotbl').append('<option value="'+v['idtipousotbl']+'" ><blockquote>'+v['idtipousotbl']+' </blockquote>'+v['tipouso']+'</option>');
+                            $('#tipousotbl').append('<option value="'+v['idtipousotbl']+'" ><blockquote>'+v['idtipousotbl']+' </blockquote>'+v['descrizioneuso']+'</option>');
                         });
                         $('#tipousotbl').trigger("loadSelect");
                     }
@@ -141,21 +140,20 @@ $('#btnSearch').click(function(){
             }
         });
         var search=$('<div class="collection"></div>');
-        $.getJSON('/MVC_GIS/models/search.php',{ denom : $('#denominazione').val(),comune: $('#comune').val() },function(response) {
+        $.getJSON('/MVC_GIS/models/search.php',{ denom : $('#denominazione').val(),comune: $('#comuneric').val() },function(response) {
             if(response) {
                 var geojsonfile= {
                 "type": "FeatureCollection",
                 "features": []
                 };
                 $.each(response,function(k,v) {
-                        search.append('<a class="collection-item onresult" value="'+v['idanagrafica']+'"><b>'+v['codiceanagrafica']+'</b> &nbsp '+v['denominazione']+'</a>');
+                        search.append('<a class="collection-item onresult" value="'+v['codanagrafica']+'"><b>'+v['codanagrafica']+'</b> &nbsp '+v['denominazione']+'</a>');
                         var feature = {
                         "type": "Feature",
                         "properties": {
-                            "idanagrafica": v['idanagrafica'],
-                            "codiceanagrafica": v['codiceanagrafica'],
+                            "codanagrafica": v['codanagrafica'],
                             "documento": v['documento'],
-                            "Denominazione" : v['denominazione'],
+                            "denominazione" : v['denominazione'],
                         },
                         "geometry": JSON.parse(v['shape'])
                         }
@@ -167,7 +165,7 @@ $('#btnSearch').click(function(){
                     for(var prop in feature.properties) {
                         html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
                     };
-                    html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['idanagrafica']+'" type="button" > Show more </button> </div>';
+                    html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['codanagrafica']+'" type="button" > Show more </button> </div>';
                     layer.bindPopup(html,{closeButton:true,autoClose:false});
                 }
                 }).addTo(map);
@@ -205,7 +203,7 @@ $('#btnSearch').click(function(){
                     for(var prop in feature.properties) {
                         html += '<tr> <th> '+prop+' </th> <td>'+feature.properties[prop]+'</td> </tr> ';
                     };
-                    html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['idanagrafica']+'" type="button" > Show more </button> </div>';
+                    html += '</table> <div> <button class="waves-effect waves-light btn btnshowmore center-align" value="'+feature.properties['codanagrafica']+'" type="button" > Show more </button> </div>';
                     layer.bindPopup(html,{closeButton:true,autoClose:false});
                 }
                 }).addTo(map);
@@ -221,8 +219,7 @@ $('#btnSearch').click(function(){
                     if(response) {
                         var table=$('<div class="collection"></div>');
                             $.each(response,function(k,v) {
-                                //table.append('<tr> <th> Codice anagrafica </th> <td>'+v['codiceanagrafica']+'</td> </tr> <tr> <th> Denominazione </th> <td>'+v['denominazione']+'</td> </tr> <tr> <th> Documento </th> <td>'+v['documento']+'</td> </tr> <tr> <th> Indirizzo </th> <td>'+v['indirizzo']+'</td> </tr> <tr> <th> Comune </th> <td>'+v['nomecomune']+'</td> </tr> <tr> <th> Codice Istat comune </th> <td>'+v['idcomune']+'</td> </tr> <tr> <th> Numero medio di persone </th> <td>'+v['nmedpers']+'</td> </tr> <tr> <th> Numero massimo di persone </th> <td>'+v['nmaxpers']+'</td> </tr> <tr> <th> Mesi di utilizzo all'+"'"+' anno </th> <td>'+v['mesianno']+'</td> </tr> <tr> <th> Foglio </th> <td>'+v['foglio']+'</td> </tr> <tr> <th> Ore di utilizzo giornaliere </th> <td>'+v['hgg']+'</td> </tr> <tr> <th> Particella </th> <td>'+v['particella']+'</td> </tr> <tr> <th> Posizione Edificio </th> <td>'+v['posizioneedificio']+'</td> </tr> <tr> <th> Propriet&agrave; </th> <td>'+v['proprieta']+'</td> </tr> <tr> <th> Numero unit&agrave; strutturali </th> <td>'+v['numerous']+'</td> </tr>');
-                                table.append('<a class="collection-item active"><b>Codice Anagrafica</b> &nbsp '+v['codiceanagrafica']+'</a><a class="collection-item"><b>Denominazione</b> &nbsp '+v['denominazione']+'</a><a class="collection-item"><b>Documento</b> &nbsp '+v['documento']+'</a><a class="collection-item"><b>Indirizzo</b> &nbsp '+v['indirizzo']+'</a><a class="collection-item"><b>Comune</b> &nbsp '+v['nomecomune']+'</a><a class="collection-item"><b>Codice Istat Comune</b> &nbsp '+v['idcomune']+'</a><a class="collection-item"><b>Numero massimo di persone </b> &nbsp '+v['nmaxpers']+'</a><a class="collection-item"><b> Mesi di utilizzo all'+"'"+' anno</b> &nbsp '+v['mesianno']+'</a><a class="collection-item"><b> Foglio </b> &nbsp '+v['foglio']+'</a><a class="collection-item"><b> Ore di utilizzo giornaliere </b> &nbsp '+v['hgg']+'</a><a class="collection-item"><b> Particella </b> &nbsp '+v['particella ']+'</a><a class="collection-item"><b> Posizione Edificio </b> &nbsp '+v['posizioneedificio']+'</a><a class="collection-item"><b>Propriet&agrave; </b> &nbsp '+v['proprieta']+'</a> <a class="collection-item"><b> Numero di unit&agrave; strutturali </b> &nbsp '+v['numerous']+'</a>');
+                                table.append('<a class="collection-item active"><b>Codice Anagrafica</b> &nbsp '+v['codanagrafica']+'</a><a class="collection-item"><b>Denominazione</b> &nbsp '+v['denominazione']+'</a><a class="collection-item"><b>Documento</b> &nbsp '+v['documento']+'</a><a class="collection-item"><b>Indirizzo</b> &nbsp '+v['indirizzo']+'</a><a class="collection-item"><b>Comune</b> &nbsp '+v['nomecomune']+'</a><a class="collection-item"><b>Codice Istat Comune</b> &nbsp '+v['codistatcomune']+'</a><a class="collection-item"><b>Numero massimo di persone </b> &nbsp '+v['nmaxpers']+'</a><a class="collection-item"><b> Mesi di utilizzo all'+"'"+' anno</b> &nbsp '+v['mesianno']+'</a><a class="collection-item"><b> Foglio </b> &nbsp '+v['foglio']+'</a><a class="collection-item"><b> Ore di utilizzo giornaliere </b> &nbsp '+v['hgg']+'</a><a class="collection-item"><b> Particella </b> &nbsp '+v['particella ']+'</a><a class="collection-item"><b> Posizione Edificio </b> &nbsp '+v['posizioneedificio']+'</a><a class="collection-item"><b>Propriet&agrave; </b> &nbsp '+v['idproprieta']+'</a> <a class="collection-item"><b> Numero di unit&agrave; strutturali </b> &nbsp '+v['numerous']+'</a>');
                             });            
                         $('#content-side-nav').append(table);
                         
