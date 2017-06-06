@@ -4,23 +4,23 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.css"  media="screen,projection"/>
-
     <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <link rel="stylesheet" href="stylepushpin.css" />
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <body>
         <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
         <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
         <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+        <script type="text/javascript" src="fakeLoader.min.js"></script>
         <script src="apppushpin.js"></script>
-        <ul id="slide-out" class="side-nav">
+        <div class="fakeloader"></div>
+        <ul id="slide-out" class="side-nav col m1 l2">
             <nav class="top-nav green lighten-2">
                 <div class="container">
-                  <div class="nav-wrapper"><a class="brand-logo"><i class="material-icons">place</i>Informazioni Anagrafica</a></div>
+                  <div class="nav-wrapper"><a class="brand-logo"><i class="material-icons">place</i>Info</a></div>
                 </div>
             </nav>
             <div id="content-side-nav">
@@ -38,7 +38,13 @@
                   
                 </div>
               </nav>
-              <div class="" id="mapid" ></div>
+              <div class="">
+                <div class="row">
+                  <div class="col s12" style="padding-left:0px; padding-right:0px;">
+                    <div class="" id="mapid" ></div>
+                  </div>
+                </div>
+              </div>
             </div>
         
         <div id="sezric" class="block">
@@ -73,7 +79,7 @@
                       </div>
                 </div>
               </form>
-              <div class="col s12 m6" id="search-result" style="overflow-y: scroll; max-height: 400px;">
+              <div class="card-panel col s12 m6 " id="search-result">
                   
               </div>
             </div>
@@ -95,8 +101,7 @@
               </ul>
             </div>
           </nav>
-          
-            <div id="formanagrafica" class="insform col s12">
+            <div id="formanagrafica" class="insform ">
             <div class="row">
               <p class="col s12 flow-text">Inserimento Anagrafica</p>
               <form class="col s12">

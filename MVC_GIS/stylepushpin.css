@@ -17,11 +17,16 @@ body::-webkit-scrollbar {
 position: relative;
 }
 .pin-bottom {
-position: relative;
+position: absolute;
 }
 .pinned {
 position: fixed !important;
 }
+
+#insnav.pinned, #ricnav.pinned {
+    position: relative !important;
+}
+
 #mapid {
     /*margin-top:64px;
     height:90%;
@@ -42,15 +47,19 @@ position: fixed !important;
        z-index: 314172; 
 }
 
-.insform {
-    padding-top: 6%;
-}
-#divric {
-    padding-top: 5%;
-}
 #slide-out {
     z-index: 314174;
 }
 #slide-out {
     overflow-y: scroll;
+    
+}
+#search-result {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+@media only screen and (max-device-width: 480px) {
+    #search-result {
+        max-height: 150px;
+    }
 }

@@ -1,4 +1,10 @@
 $(document).ready(function() {
+   /* $(".fakeloader").fakeLoader({
+        timeToHide:120000,
+        bgColor:"#1abc9c",
+        spinner:"spinner6"
+    });*/
+        
     var ar=new Array(33,34,35,36,37,38,39,40);
     $(document).keydown(function(e) {
          var key = e.which;
@@ -97,9 +103,10 @@ $(document).ready(function() {
     });
   $(document).on('loadSideNav','#mapid',function() {
     $('.button-collapse').sideNav({
-      menuWidth: 500, // Default is 240
+      menuWidth: 240, // Default is 240
       edge: 'right', // Choose the horizontal origin
-      closeOnClick: false // Closes side-nav on <a> clicks, useful for Angular/Meteor
+      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+      draggable:true
     });
 
   });
@@ -233,8 +240,6 @@ $('#btnSearch').click(function(){
   $('#ricercabtn').click(function() {
     var elementOffset = $('#sezric').offset().top;
     $("html, body").stop(true,true).animate({ scrollTop: elementOffset }, "slow","swing",function() {
-      elementOffset = $('#sezric').offset().top;
-      $("html, body").stop(true,true).animate({ scrollTop: elementOffset }, "slow");
     });
 
 
